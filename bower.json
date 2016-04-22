@@ -8,8 +8,5 @@
     "video.js": "^5.8.5",
     "videojs-youtube": "^2.0.8",
     "jquery-ui": "^1.11.4"
-  },
-  "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }

@@ -12,7 +12,7 @@
     "build:server": "webpack --config webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
     "emu": "NODE_ENV=dev node server.js",
-    "postinstall": "bower install && grunt build"
+    "postinstall": "bower install"
   },
   "author": "",
   "license": "ISC",
