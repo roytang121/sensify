@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react'
 import {Link} from 'react-router';
 var fs = require('fs');
 import ytdl from 'ytdl-core'
@@ -9,7 +9,7 @@ var toastr = require('toastr');
 var videojs = require('video.js/dist/video.min.js');
 import PC from './PlayerController';
 
-class Player extends React.Component {
+class Player extends Component {
 
   constructor(props) {
     super(props);

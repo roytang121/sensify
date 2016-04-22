@@ -24,40 +24,40 @@ const API_ROOT = process.env.PORT || 8080;
 const PORT = API_ROOT + 1;
 
 /** for dev env **/
-if (process.env.NODE_ENV === 'dev' || !process.env.NODE_ENV) {
-  let webpack = require('webpack');
-  let WebpackDevServer = require('webpack-dev-server');
-  let config = require('./webpack.development.config');
-
-  new WebpackDevServer(webpack(config), {
-    /** webpack configuration **/
-    proxy: {
-      "/socket.io/*": {
-        target: 'http://localhost:' + API_ROOT
-      },
-      "/api/*": {
-        target: 'http://localhost:' + API_ROOT
-      },
-      "/socket": {
-        target: "http://localhost:" + API_ROOT + '/socket.io/socket.io.js'
-      }
-    },
-    publicPath: path.resolve('/public/'),
-    hot: false,
-    quiet: false,
-    noInfo: false,
-    contentBase: 'public/',
-    historyApiFallback: true,
-    stats: { colors: true },
-    /** end webpack configuration **/
-  }).listen(PORT, 'localhost', function (err, result) {
-    if (err) {
-      return console.log(err);
-    }
-
-    console.log('Webpack-dev-server listening at http://localhost:' + PORT);
-  });
-}
+// if (process.env.NODE_ENV === 'dev' || !process.env.NODE_ENV) {
+//   let webpack = require('webpack');
+//   let WebpackDevServer = require('webpack-dev-server');
+//   let config = require('./webpack.development.config');
+//
+//   new WebpackDevServer(webpack(config), {
+//     /** webpack configuration **/
+//     proxy: {
+//       "/socket.io/*": {
+//         target: 'http://localhost:' + API_ROOT
+//       },
+//       "/api/*": {
+//         target: 'http://localhost:' + API_ROOT
+//       },
+//       "/socket": {
+//         target: "http://localhost:" + API_ROOT + '/socket.io/socket.io.js'
+//       }
+//     },
+//     publicPath: path.resolve('/public/'),
+//     hot: false,
+//     quiet: false,
+//     noInfo: false,
+//     contentBase: 'public/',
+//     historyApiFallback: true,
+//     stats: { colors: true },
+//     /** end webpack configuration **/
+//   }).listen(PORT, 'localhost', function (err, result) {
+//     if (err) {
+//       return console.log(err);
+//     }
+//
+//     console.log('Webpack-dev-server listening at http://localhost:' + PORT);
+//   });
+// }
 
 /** api server **/
 var app = express()
@@ -74,6 +74,19 @@ app.use(function (req, res, next) {
   console.log(req.method.red.bold + " - " + req.url.green.bold);
   next();
 });
+
+var webpackDevMiddleware = require("webpack-dev-middleware");
+var webpack = require("webpack");
+let config = require('./webpack.development.config');
+
+app.use(webpackDevMiddleware(webpack(config), {
+  // options
+  publicPath: path.resolve('/public/'),
+  contentBase: 'public/',
+  quiet: false,
+  historyApiFallback: true,
+  stats: { colors: true },
+}));
 
 
 /** Production Server **/
@@ -111,19 +124,19 @@ app.use(function (req, res, next) {
 //    `
 // }
 
-var proxy = require('http-proxy-middleware');
-var webpackProxy = proxy('/webpack', {
-  target: 'http://localhost:' + PORT,
-  changeOrigin: true,
-  ws: true,
-  pathRewrite: {
-    '/webpack': '/',
-  },
-  proxyTable: {
-    '*': 'http://localhost:' + PORT
-  }
-});
-app.use(webpackProxy);
+// var proxy = require('http-proxy-middleware');
+// var webpackProxy = proxy('/webpack', {
+//   target: 'http://localhost:' + PORT,
+//   changeOrigin: true,
+//   ws: true,
+//   pathRewrite: {
+//     '/webpack': '/',
+//   },
+//   proxyTable: {
+//     '*': 'http://localhost:' + PORT
+//   }
+// });
+// app.use(webpackProxy);
 
 //import api module
 app.use('/api', require('./api'));

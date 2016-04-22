@@ -2,8 +2,10 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 // loaders: ['react-hot', 'babel-loader?presets[]=es2015&presets[]=react']
+var production = process.env.NODE_ENV === 'production';
+
 module.exports = {
-  devtool: 'eval',
+  devtool: production ? 'source-map' : 'eval',
 
   node: {
     fs: "empty"
@@ -26,40 +28,47 @@ module.exports = {
   },
 
   module: {
-    preLoaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'source-map'
-      }
-    ],
+    // preLoaders: [
+    //   {
+    //     test: /\.jsx?$/,
+    //     exclude: /(node_modules|bower_components)/,
+    //     loader: 'source-map'
+    //   }
+    // ],
     loaders: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        // exclude: /(node_modules|bower_components)/,
+        include: [
+          path.resolve(__dirname, './app'),
+          path.resolve(__dirname, './index.js')
+        ],
         loaders: ['react-hot-loader', 'babel']
       },
       {
         test: /\.less$/,
-        exclude: /(node_modules|bower_components)/,
+        // exclude: /(node_modules|bower_components)/,
+        include: [
+          path.resolve(__dirname, './app/stylesheets')
+        ],
         // loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
         loader: "style!css!less"
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: "style-loader!css-loader",
       },
       {
         test   : /\.(png|jpg)$/,
-        loader : 'url-loader?limit=8192'
+        loader : 'url-loader?limit=8192',
       },
       {
         test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
-        loader: 'url-loader'
+        loader: 'url-loader',
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
+        loader: 'json-loader',
       }
     ]
   },
@@ -70,14 +79,14 @@ module.exports = {
     extensions: ['', '.json', '.js', '.jsx']
   },
   progress: true,
-  plugins: [
+  // plugins: [
     // new webpack.HotModuleReplacementPlugin(),
-    new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
-        'root.jQuery': 'jquery'
-    }),
+    // new webpack.ProvidePlugin({
+    //     $: 'jquery',
+    //     jQuery: 'jquery',
+    //     'window.jQuery': 'jquery',
+    //     'root.jQuery': 'jquery'
+    // }),
     // new webpack.DefinePlugin({
     //   'process.env': {
     //     'NODE_ENV': JSON.stringify('production')
@@ -89,12 +98,33 @@ module.exports = {
     // new ExtractTextPlugin("/css/[name].css")
     // ExtractTextPlugin will be used in production level
     // because it doesn't support hot reload
-  ]
-  // plugins: process.env.NODE_ENV === 'production' ? [
-  //   new webpack.optimize.DedupePlugin(),
-  //   new webpack.optimize.OccurrenceOrderPlugin(),
-  //   new webpack.optimize.UglifyJsPlugin()
-  // ] : [
-  //   new webpack.HotModuleReplacementPlugin()
-  // ],
+  // ]
+  plugins: production ? [
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        'root.jQuery': 'jquery'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    }),
+  ] : [
+    // new webpack.HotModuleReplacementPlugin()
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        'root.jQuery': 'jquery'
+    }),
+  ],
 }

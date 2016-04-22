@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-class Foobar extends React.Component {
+class Foobar extends Component {
   constructor(props) {
     super(props);
   }

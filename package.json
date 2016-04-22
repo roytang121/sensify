@@ -8,8 +8,8 @@
     "webpack-dev": "webpack-dev-server --inline --hot --content-base public/ --history-api-fallback",
     "start:dev": "npm run build && node ./build/server.development.bundle.js",
     "start:prod": "npm run build && node ./build/server.development.bundle.js",
-    "build:client": "webpack --config webpack.development.config.js",
-    "build:server": "webpack --config webpack.server.config.js",
+    "build:client": "webpack --progress --config webpack.development.config.js",
+    "build:server": "webpack --progress --config webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
     "emu": "NODE_ENV=dev node server.js",
     "postinstall": "bower install"
@@ -60,6 +60,7 @@
     "url-loader": "^0.5.7",
     "video.js": "^5.8.7",
     "webpack": "^1.12.13",
+    "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
     "youtube-dl": "^1.11.0",
     "ytdl-core": "^0.7.13"
