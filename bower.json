@@ -1,0 +1,12 @@
+{
+  "name": "sensify",
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "bootstrap": "^3.3.5",
+    "magnific-popup": "^1.0.0",
+    "toastr": "^2.1.1",
+    "video.js": "^5.8.5",
+    "videojs-youtube": "^2.0.8",
+    "jquery-ui": "^1.11.4"
+  }
+}

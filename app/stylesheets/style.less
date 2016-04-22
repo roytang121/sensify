@@ -1,0 +1,126 @@
+@foobar-height: 80px;
+@foobar-large-height: 200px;
+
+@screen-s-max: 800px;
+@screen-m-min: 801px;
+
+/* --- global --- */
+.red {
+  color: red;
+}
+
+.flexbox-container {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.flexbox-center-horizontal {
+  -webkit-justify-content: flex-center;
+  justify-content: center;
+}
+
+.flexbox-center-vertical {
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+.top-buffer {
+  margin-top: 10px;
+}
+
+#foobar-container {
+    &:extend(.flexbox-container);
+}
+
+
+/* Small devices (800px) */
+@media (max-width: @screen-s-max) {
+  #foobar-container {
+    height: @foobar-large-height;
+  }
+
+  #foobar-container {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: flex-center;
+    justify-content: center;
+    align-items: center;
+    -webkit-align-items: center;
+  }
+}
+
+/* Medium devices (desktops, 801px and up) */
+@media (min-width: @screen-m-min) {
+  #foobar-container {
+    height: @foobar-height;
+  }
+
+  #foobar-container {
+    align-items: center;
+    -webkit-align-items: center;
+  }
+}
+#nav-add-bar {
+  width: 300px;
+}
+
+#player-progress-instance {
+}
+
+@media (max-width: @screen-s-max) {
+  #player-progress-instance {
+    width: 380px;
+  }
+}
+
+@media (min-width: @screen-m-min) {
+  #player-progress-wrapper {
+    flex-grow: 1;
+  }
+
+  #player-progress-instance {
+    width: 100%;
+    margin-left: 20px;
+  }
+}
+
+/* --- Player.js --- */
+.video-box-container {
+  &:extend(.flexbox-container, .flexbox-center-horizontal);
+  background-color: #000;
+}
+
+@media (max-width: @screen-s-max) {
+  #search-form {
+
+  }
+}
+
+@media (min-width: @screen-m-min) {
+  #search-form {
+    display: none;
+  }
+}
+
+/* --- PlayerItemView --- */
+.player-item-view {
+}
+
+.player-item-view > .player-item-view-display-on-hover {
+  display: none;
+}
+
+.player-item-view:hover > .player-item-view-display-on-hover {
+  display: inline-block;
+  float:right;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.now_playing {
+  display: inline-block;
+  background-image: url('/img/now_playing.gif');
+  width: 14px;
+  height: 11px;
+  margin-left: 16px;
+}

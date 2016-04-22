@@ -1,0 +1,12 @@
+node_modules
+bower_components
+build
+public/bundle.js
+.DS_Store
+rethinkdb_data
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
