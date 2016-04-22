@@ -6,7 +6,7 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "webpack-dev": "webpack-dev-server --inline --hot --content-base public/ --history-api-fallback",
-    "start:dev": "npm run build:server && node ./build/server.development.bundle.js",
+    "start:dev": "npm run build && node ./build/server.development.bundle.js",
     "start:prod": "npm run build && node ./build/server.development.bundle.js",
     "build:client": "webpack --config webpack.development.config.js",
     "build:server": "webpack --config webpack.server.config.js",
