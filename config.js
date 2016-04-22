@@ -1,4 +1,7 @@
+import colors from 'colors'
+
 module.exports = function(env) {
+  console.log("Using " + "Config".green + " file with " + env.red);
   if (env === 'dev') {
     return {
       rethinkdb_host: '192.168.99.100',
@@ -7,7 +10,7 @@ module.exports = function(env) {
     }
   } else if (env === 'prod') {
     return {
-      
+
     }
   }
 }
