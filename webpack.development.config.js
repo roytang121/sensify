@@ -12,8 +12,8 @@ module.exports = {
   entry: {
     app: [
       './index.js',
-      'webpack-dev-server/client?http://localhost:8081/',
-      "webpack/hot/only-dev-server"
+      // 'webpack-dev-server/client?http://localhost:8080/',
+      // "webpack/hot/only-dev-server"
     ],
     // vendors: ['video.js', 'jquery']
   },
@@ -21,7 +21,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve('./public/'),
-    publicPath: 'http://localhost:8081/public/'
+    publicPath: 'public/'
     // publicPath: '/static/'
   },
 
@@ -64,28 +64,25 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
-  resolve: {
     modulesDirectories: [
         'node_modules'
     ],
-    extensions: ['', '.json', '.js']
+    extensions: ['', '.json', '.js', '.jsx']
   },
   progress: true,
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
         'root.jQuery': 'jquery'
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env': {
+    //     'NODE_ENV': JSON.stringify('production')
+    //   }
+    // }),
     // new webpack.optimize.UglifyJsPlugin(),
     // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')

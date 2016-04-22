@@ -5,7 +5,6 @@ import { Router, browserHistory } from 'react-router'
 // import routes and pass them into <Router/>
 import routes from './app/routes'
 
-require('toastr');
 
 render(
   <Router routes={routes} history={browserHistory}/>,
