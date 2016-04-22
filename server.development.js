@@ -61,6 +61,7 @@ const PORT = API_ROOT + 1;
 
 /** api server **/
 var app = express()
+app.use(compression());
 
 // middlewares
 // serve our static stuff like index.css
@@ -69,7 +70,6 @@ app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
-app.use(compression())
 app.set('view engine', 'ejs');
 app.use(function (req, res, next) {
   console.log(req.method.red.bold + " - " + req.url.green.bold);
@@ -90,8 +90,8 @@ if (!process.env.NODE_ENV) {
     stats: { colors: true },
   }));
 } else {
-  app.get('/', (req, res) => {
-    res.render('index');
+  app.get('/inin', (req, res) => {
+    res.render('index2');
   });
 }
 
