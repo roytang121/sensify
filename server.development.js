@@ -70,24 +70,30 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 app.use(compression())
+app.set('view engine', 'ejs');
 app.use(function (req, res, next) {
   console.log(req.method.red.bold + " - " + req.url.green.bold);
   next();
 });
 
-var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpack = require("webpack");
-let config = require('./webpack.development.config');
+if (!process.env.NODE_ENV) {
+  var webpackDevMiddleware = require("webpack-dev-middleware");
+  var webpack = require("webpack");
+  let config = require('./webpack.development.config');
 
-app.use(webpackDevMiddleware(webpack(config), {
-  // options
-  publicPath: path.resolve('/public/'),
-  contentBase: 'public/',
-  quiet: false,
-  historyApiFallback: true,
-  stats: { colors: true },
-}));
-
+  app.use(webpackDevMiddleware(webpack(config), {
+    // options
+    publicPath: path.resolve('/public/'),
+    contentBase: 'public/',
+    quiet: false,
+    historyApiFallback: true,
+    stats: { colors: true },
+  }));
+} else {
+  app.get('/', (req, res) => {
+    res.render('index');
+  });
+}
 
 /** Production Server **/
 // if (process.env.NODE_ENV === 'production') {
