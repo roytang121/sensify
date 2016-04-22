@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 8081;
 const API_ROOT = PORT - 1;
 
 /** for dev env **/
-if (!process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'dev' || !process.env.NODE_ENV) {
   let webpack = require('webpack');
   let WebpackDevServer = require('webpack-dev-server');
   let config = require('./webpack.development.config');

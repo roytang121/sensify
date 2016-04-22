@@ -10,7 +10,9 @@ module.exports = function(env) {
     }
   } else if (env === 'prod') {
     return {
-
+      rethinkdb_host: '192.168.99.100',
+      rethinkdb_port: 32769,
+      rethinkdb_dbname: 'prod_sensbify'
     }
   }
 }

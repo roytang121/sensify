@@ -1,6 +1,6 @@
 const r =  require('rethinkdb');
 const config = require('./config')(process.env.NODE_ENV || 'dev');
-import colors from 'colors'
+import colors from 'colors';
 require('rethinkdb-init')(r);
 
 /*
