@@ -1,8 +1,7 @@
 class Socket {
   constructor() {
-    if (typeof io !== 'undefined') {
-      this.io = io.connect();
-    }
+    console.log("connect io socket");
+    this.io = io.connect();
   }
 }
 

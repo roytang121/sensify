@@ -47,6 +47,24 @@ class PlayerController {
     this.queue = this.playlist.playerItems.slice();
   }
 
+  setPlaylistWithStartingItem(playlist, startingItem) {
+    if (startingItem === null) {
+      this.setPlaylist(playlist);
+    } else {
+      this.playlist = playlist;
+
+      let index = this.playlist.playerItems.indexOf(startingItem);
+      if (index === -1) {
+        this.setPlaylist(playlist);
+      } else {
+        this.queue = this.playlist.playerItems.slice();
+        this.queue.splice(0, index+1);
+        console.log(index);
+        console.log(this.queue);
+      }
+    }
+  }
+
   /* Actions */
   setup() {
     console.debug("pc setup");
@@ -75,8 +93,13 @@ class PlayerController {
           this.currentItem = item;
           this.playWithPlayerItem(item);
           this.notify('playerItemDidChange');
+          console.log("this.queue.length > 0");
+        } else {
+          console.log("this.queue.length < 0");
         }
       }
+    } else {
+      console.error("this.playlist == nil");
     }
   }
 
@@ -124,6 +147,9 @@ class PlayerController {
 
       this.currentItem = playerItem;
       this.notify('playerItemDidChange');
+
+      // rebuild quene when play with item
+      this.setPlaylistWithStartingItem(this.playlist, playerItem);
     }
   }
 

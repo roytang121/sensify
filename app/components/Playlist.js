@@ -9,7 +9,7 @@ let socket = Socket.io
 
 class Playlist {
   constructor() {
-    console.debug("Playlist constructor");
+    console.log("Playlist constructor");
 
     if (!instance) {
       instance = this;
@@ -47,7 +47,7 @@ class Playlist {
 
 
     // listen to rethink db change feeds
-    // let socket = io.connect();
+    let socket = io.connect();
     socket.on('playlistChanges', (newVal) => {
 
       let newItems = []

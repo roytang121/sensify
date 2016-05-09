@@ -90,9 +90,7 @@ if (!process.env.NODE_ENV) {
     stats: { colors: true },
   }));
 } else {
-  app.get('/inin', (req, res) => {
-    res.render('index2');
-  });
+
 }
 
 /** Production Server **/

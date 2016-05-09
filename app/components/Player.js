@@ -5,8 +5,9 @@ import ytdl from 'ytdl-core'
 import Playlist from './Playlist';
 import PlayerItem from './PlayerItem';
 import PlayerItemView from './PlayerItemView';
+var videojs = require('video.js');
 var toastr = require('toastr');
-var videojs = require('video.js/dist/video.min.js');
+// var videojs = require('video.js/dist/video.min.js');
 import PC from './PlayerController';
 
 class Player extends Component {
@@ -33,11 +34,11 @@ class Player extends Component {
 
   componentDidMount() {
 
-    $('.sortable').sortable({
-      update: (event, ui) => {
-        toastr.info(ui.item.index())
-      }
-    });
+    // $('.sortable').sortable({
+    //   update: (event, ui) => {
+    //     toastr.info(ui.item.index())
+    //   }
+    // });
 
     Playlist.listenToChange(this.onPlaylistChange);
 
@@ -59,6 +60,8 @@ class Player extends Component {
   */
   onPlaylistChange(items) {
     this.setState({playlist: Playlist});
+
+    PC.setPlaylist(Playlist);
   }
 
   /** UI Actions **/
@@ -143,7 +146,7 @@ class Player extends Component {
             <div className="panel-heading">
               <h4 className="panel-title">
                 Main Playlist
-                <a style={{"margin-left": "16px", cursor: 'pointer'}} className="glyphicon glyphicon-play-circle" onClick={this.handlePlaylistClick.bind(this)} />
+                <a style={{"marginLeft": "16px", cursor: 'pointer'}} className="glyphicon glyphicon-play-circle" onClick={this.handlePlaylistClick.bind(this)} />
                 <span className="label label-info text-right pull-right">{this.state.playlist.playerItems.length} songs</span>
               </h4>
             </div>

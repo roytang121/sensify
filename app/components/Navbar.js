@@ -3,12 +3,16 @@ import {Link} from 'react-router';
 import NavbarStore from '../stores/NavbarStore';
 import NavbarActions from '../actions/NavbarActions';
 import Socket from './Socket';
+import Playlist from './Playlist';
+import PlayerItem from './PlayerItem';
+var toastr = require('toastr');
 
 class Navbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = NavbarStore.getState();
         this.onChange = this.onChange.bind(this);
+        this.search = this.search.bind(this);
     }
 
     componentDidMount() {
@@ -49,6 +53,41 @@ class Navbar extends React.Component {
         //         history: this.props.history
         //     });
         // }
+        console.log("SEARCH");
+        this.search($('#search-form-input').val(), (done) => {
+          $('#search-form-input').val("");
+        });
+    }
+
+    search(val, cb) {
+      let yt_link = val;
+      var encoded = btoa(yt_link);
+
+      $.ajax({ url: '/api/youtubedl/?encoded=' + encoded})
+        .done( (data) => {
+
+          if (data.error) {
+            toastr.error("Error searching video");
+            return;
+          }
+
+          // var video = videojs(this.state.vid);
+
+          // video.autoplay(true);
+
+          // video.src([
+          //   { type: 'video/mp4', src: data.url }
+          // ]);
+
+          console.log(data.url);
+
+          // append original source to playerItem
+          data.youtube_url = yt_link;
+
+          Playlist.addPlayerItem(new PlayerItem(data));
+
+          cb(true);
+        });
     }
 
     render() {
@@ -80,7 +119,7 @@ class Navbar extends React.Component {
                 <div id='navbar' className='navbar-collapse collapse'>
                     <form ref='searchForm' className='navbar-form navbar-form-large navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
                         <div className='input-group'>
-                            <input type='text' id="nav-add-bar" className='form-control' placeholder="https://www.youtube.com/watch?v=YAyRYn-CjxY" value={this.state.searchQuery} onChange={NavbarActions.updateSearchQuery} />
+                            <input type='text' id="search-form-input" className='form-control nav-bar-search' placeholder="https://www.youtube.com/watch?v=YAyRYn-CjxY" value={this.state.searchQuery} onChange={NavbarActions.updateSearchQuery} />
                           <span className='input-group-btn'>
                             <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-plus'></span></button>
                           </span>

@@ -10,6 +10,6 @@ module.exports = (
     <Route path='/' component={Player}>
     //   <Redirect from="/" to="player" />
     // </Route>
-    // <Route path='/player' component={Player} />
+    <Route path='/player' component={Home} />
   </Route>
 )

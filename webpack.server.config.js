@@ -77,13 +77,13 @@ module.exports = {
   //
   // progress: true,
   //
-  // plugins: [
-  //   // new webpack.HotModuleReplacementPlugin(),
-  //   new webpack.ProvidePlugin({
-  //       $: 'jquery',
-  //       jQuery: 'jquery',
-  //       'window.jQuery': 'jquery',
-  //       'root.jQuery': 'jquery'
-  //   }),
-  // ]
+  plugins: [
+    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        'root.jQuery': 'jquery'
+    }),
+  ]
 }

@@ -4,17 +4,7 @@ import Home from './Home'
 import Navbar from './Navbar';
 import Foobar from './Foobar';
 
-
-/** CSS **/
-require('../stylesheets/main.less');
-require('../stylesheets/style.less');
-require('video.js/dist/video-js.css');
-
-/** vendors **/
-// var videojs = require('video.js');
-require('jquery-ui/sortable');
-
-require('toastr');
+// require('toastr');
 
 class App extends Component {
     render() {
