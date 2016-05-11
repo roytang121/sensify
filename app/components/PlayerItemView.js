@@ -30,7 +30,7 @@ class PlayerItemView extends Component {
 
   onPlayerItemClick(e) {
     e.preventDefault();
-    PC.playWithPlayerItem(this.props.playerItem);
+    PC.play(this.props.playerItem);
   }
 
   render() {

@@ -15,6 +15,8 @@ class PlayerController {
       playerItemDidChange: [],
       playerItemStateDidChange: []
     }
+
+    this.nextItem = null;
   }
 
   listen(player) {
@@ -41,10 +43,18 @@ class PlayerController {
   }
 
   setPlaylist(playlist) {
+
+    // properly set next song after set new playlist
     this.playlist = playlist;
 
+    if (this.playlist != null) {
+      if (this.currentItem != null) {
+        this.updateNextItem();
+      }
+    }
+
     // append playerItems to queue
-    this.queue = this.playlist.playerItems.slice();
+    // this.queue = this.playlist.playerItems.slice();
   }
 
   setPlaylistWithStartingItem(playlist, startingItem) {
@@ -78,35 +88,62 @@ class PlayerController {
     }
   }
 
-  play() {
+  play(playerItem) {
     console.log("trigger play");
+
+    if (playerItem === null && this.currentItem != null) {
+      this.player.play();
+      this.updateNextItem();
+      return;
+    }
+
     if (this.playlist != null) {
-      // console.debug("pc play playlist from index 0");
-      // this.playAtIndex(0);
-      if (this.currentItem != null) {
-        this.player.play();
-        this.notify('playerItemDidChange');
-      } else {
-        // pop one item from queue and play
-        if (this.queue.length > 0) {
-          let item = this.queue.shift();
-          this.currentItem = item;
-          this.playWithPlayerItem(item);
-          this.notify('playerItemDidChange');
-          console.log("this.queue.length > 0");
+      // pop one item from queue and play
+      if (this.playlist.playerItems.length > 0) {
+        // if (this.nextItem === null) {
+        //   if (this.playlist.playerItems.length > 0) {
+        //     this.currentItem = this.playlist.playerItems[0];
+        //   } else {
+        //     console.log("Playlist reached to end");
+        //   }
+        // } else {
+        //   this.currentItem = nextItem;
+        // }
+        this.currentItem = playerItem;
+
+        // query currentItem index and set nextItem
+        if (this.currentItem != null) {
+          this.updateNextItem();
         } else {
-          console.log("this.queue.length < 0");
+          console.debug("CurrentItem == null, unexpected");
+          return;
         }
+
+        this.playWithPlayerItem(this.currentItem);
+        this.notify('playerItemDidChange');
+        console.log("this.queue.length > 0");
+      } else {
+        console.log("this.queue.length < 0");
       }
     } else {
       console.error("this.playlist == nil");
     }
   }
 
-  insert(playerItem) {
-    // if (playerItem != null ){
-    //   this.playWithPlayerItem(playerItem);
-    // }
+  updateNextItem() {
+    let index = this.playlist.playerItems.indexOfPlayerItem(this.currentItem);
+
+    // happen when player is playing and user deleted the curreItem song
+    if (index === -1 && this.currentItem != null && this.nextItem != null) {
+        // deleted currentItem and updated
+        return; // no need to change nextItem
+    }
+
+    if (index + 1 < this.playlist.playerItems.length) {
+      this.nextItem = this.playlist.playerItems[index + 1];
+    } else {
+      this.nextItem = null;
+    }
   }
 
   pause() {
@@ -146,18 +183,17 @@ class PlayerController {
         });
 
       this.currentItem = playerItem;
+      console.log(this.currentItem);
       this.notify('playerItemDidChange');
-
-      // rebuild quene when play with item
-      this.setPlaylistWithStartingItem(this.playlist, playerItem);
     }
   }
 
   /** Videojs event **/
   videojsDidEnded() {
     console.debug("[videojs event] Ended");
-    this.currentItem = null;
-    this.play(); // default play to next item
+    this.currentItem = this.nextItem;
+    console.log(this.nextItem);
+    this.play(this.currentItem); // default play to next item
   }
 
   videojsDidTimeUpdate() {

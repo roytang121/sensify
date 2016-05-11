@@ -1,5 +1,13 @@
 import uuid from '../utils/UUID';
 
+Array.prototype.indexOfPlayerItem = function (playerItem) {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i].uuid === playerItem.uuid)
+      return i;
+  }
+  return -1;
+}
+
 class PlayerItem {
   constructor(props) {
 
@@ -35,6 +43,10 @@ class PlayerItem {
       });
 
     }.bind(this));
+  }
+
+  toString() {
+    return this.uuid;
   }
 }
 

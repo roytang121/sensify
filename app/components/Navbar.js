@@ -50,6 +50,7 @@ class Navbar extends React.Component {
       console.log("NAV SEARCH");
       this.search($('#nav-search-form-input').val(), (done) => {
         $('#nav-search-form-input').val("");
+        console.debug("donedone");
       });
     }
 
