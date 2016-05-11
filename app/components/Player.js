@@ -59,6 +59,8 @@ class Player extends Component {
     Playlist onChange Delegate
   */
   onPlaylistChange(items) {
+
+    console.log(Playlist.playerItems);
     this.setState({playlist: Playlist});
 
     PC.setPlaylist(Playlist);
@@ -106,7 +108,7 @@ class Player extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // this.onSearchForm();
+    this.onSearchForm();
   }
 
   handlePlaylistClick() {
@@ -123,7 +125,7 @@ class Player extends Component {
             <div className='input-group' id="search-form">
                 <input id="search-form-input" type='text' className='form-control' placeholder="https://www.youtube.com/watch?v=YAyRYn-CjxY" />
               <span className='input-group-btn'>
-                <button className='btn btn-default' onClick={this.onSearchForm.bind(this)}><span className='glyphicon glyphicon-plus'></span></button>
+                <button className='btn btn-default' type="submit"><span className='glyphicon glyphicon-plus'></span></button>
               </span>
             </div>
           </form>
@@ -153,8 +155,8 @@ class Player extends Component {
             <table className="table table-striped">
               <tbody className="sortable">
                 {
-                  this.state.playlist.playerItems.map(function(playerItem, index) {
-                    return <tr><td><PlayerItemView data-index={""+index} playerItem={playerItem} /></td></tr>;
+                  Playlist.playerItems.map(function(playerItem, index) {
+                    return <tr key={"row-"+index}><td><PlayerItemView data-index={""+index} playerItem={playerItem} /></td></tr>;
                   })
                 }
               </tbody>

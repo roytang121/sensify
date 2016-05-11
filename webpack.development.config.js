@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 // loaders: ['react-hot', 'babel-loader?presets[]=es2015&presets[]=react']
 var production = process.env.NODE_ENV === 'production';
 
@@ -118,6 +119,13 @@ module.exports = {
         warnings: false
       }
     }),
+    new HtmlWebpackPlugin({
+      template: 'index.ejs',
+      debug: "debug",
+      filename: "index.html",
+      production: true,
+      inject: false,
+    })
   ] : [
     // new webpack.HotModuleReplacementPlugin()
     new webpack.ProvidePlugin({
@@ -126,5 +134,12 @@ module.exports = {
         'window.jQuery': 'jquery',
         'root.jQuery': 'jquery'
     }),
+    new HtmlWebpackPlugin({
+      template: 'index.ejs',
+      debug: "debug",
+      filename: "index.html",
+      production: false,
+      inject: false,
+    })
   ],
 }

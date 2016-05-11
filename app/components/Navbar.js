@@ -12,7 +12,7 @@ class Navbar extends React.Component {
         super(props);
         this.state = NavbarStore.getState();
         this.onChange = this.onChange.bind(this);
-        this.search = this.search.bind(this);
+        // this.search = this.search.bind(this);
     }
 
     componentDidMount() {
@@ -41,22 +41,16 @@ class Navbar extends React.Component {
         this.setState(state);
     }
 
-    handleSubmit(event) {
+    handleNavFormSubmit(event) {
         event.preventDefault();
+        this.onNavSearchForm();
+    }
 
-        // let searchQuery = this.state.searchQuery.trim();
-        //
-        // if (searchQuery) {
-        //     NavbarActions.findCharacter({
-        //         searchQuery: searchQuery,
-        //         searchForm: this.refs.searchForm,
-        //         history: this.props.history
-        //     });
-        // }
-        console.log("SEARCH");
-        this.search($('#search-form-input').val(), (done) => {
-          $('#search-form-input').val("");
-        });
+    onNavSearchForm() {
+      console.log("NAV SEARCH");
+      this.search($('#nav-search-form-input').val(), (done) => {
+        $('#nav-search-form-input').val("");
+      });
     }
 
     search(val, cb) {
@@ -117,11 +111,11 @@ class Navbar extends React.Component {
                     </Link>
                 </div>
                 <div id='navbar' className='navbar-collapse collapse'>
-                    <form ref='searchForm' className='navbar-form navbar-form-large navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
+                    <form ref='navSearchForm' className='navbar-form navbar-form-large navbar-left animated' onSubmit={this.handleNavFormSubmit.bind(this)}>
                         <div className='input-group'>
-                            <input type='text' id="search-form-input" className='form-control nav-bar-search' placeholder="https://www.youtube.com/watch?v=YAyRYn-CjxY" value={this.state.searchQuery} onChange={NavbarActions.updateSearchQuery} />
+                            <input type='text' id="nav-search-form-input" className='form-control nav-bar-search' placeholder="https://www.youtube.com/watch?v=YAyRYn-CjxY" value={this.state.searchQuery} onChange={NavbarActions.updateSearchQuery} />
                           <span className='input-group-btn'>
-                            <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-plus'></span></button>
+                            <button className='btn btn-default' type="submit"><span className='glyphicon glyphicon-plus'></span></button>
                           </span>
                         </div>
                     </form>

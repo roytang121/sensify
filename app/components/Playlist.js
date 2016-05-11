@@ -53,7 +53,7 @@ class Playlist {
       let newItems = []
 
       for (var _data of newVal.data) {
-        console.log(_data);
+        // console.log(_data);addPlayerItem
         let item = new PlayerItem(_data);
         newItems.push(item);
       }
