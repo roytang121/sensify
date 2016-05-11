@@ -81,14 +81,16 @@ var webpackDevMiddleware = require("webpack-dev-middleware");
 var webpack = require("webpack");
 let config = require('./webpack.development.config');
 
-app.use(webpackDevMiddleware(webpack(config), {
-  // options
-  publicPath: path.resolve('/public/'),
-  contentBase: 'public/',
-  quiet: false,
-  historyApiFallback: true,
-  stats: { colors: true },
-}));
+if (!process.env.NODE_ENV) {
+  app.use(webpackDevMiddleware(webpack(config), {
+    // options
+    publicPath: path.resolve('/public/'),
+    contentBase: 'public/',
+    quiet: false,
+    historyApiFallback: true,
+    stats: { colors: true },
+  }));
+}
 
 /** Production Server **/
 // if (process.env.NODE_ENV === 'production') {

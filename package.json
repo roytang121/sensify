@@ -9,6 +9,7 @@
     "start:dev": "npm run build:server && node ./build/server.development.bundle.js",
     "start:prod": "node ./build/server.development.bundle.js",
     "build:client": "webpack --progress --config webpack.development.config.js",
+    "build:client-prod": "webpack --progress --config webpack.development.config.js -p",
     "build:server": "webpack --progress --config webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
     "emu": "NODE_ENV=dev node server.js",
