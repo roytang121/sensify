@@ -17,7 +17,7 @@ module.exports = function(env) {
     return {
       rethinkdb_host: "localhost",
       rethinkdb_port: process.env.RETHINKDB_PORT,
-      rethinkdb_dbname: 'prod_sensbify'
+      rethinkdb_dbname: 'dev_sensbify'
     }
   } else {
     return {
