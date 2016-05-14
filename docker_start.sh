@@ -1,2 +1,6 @@
 #!/bin/bash
-env DOCKER_IP=192.168.99.100 npm start
+# rm -rf sensify
+git clone https://github.com/roytang121/sensify
+cd ./sensify
+npm install
+npm start
