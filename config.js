@@ -22,7 +22,7 @@ module.exports = function(env) {
   } else {
     return {
       rethinkdb_host: '192.168.99.100',
-      rethinkdb_port: 32769,
+      rethinkdb_port: 32775,
       rethinkdb_dbname: 'dev_sensbify'
     }
   }

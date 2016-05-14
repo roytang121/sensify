@@ -10,3 +10,7 @@ rethinkdb_data
 *.iml
 out
 gen
+
+.log
+
+build/

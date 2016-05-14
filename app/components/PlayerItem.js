@@ -26,13 +26,14 @@ class PlayerItem {
       this.uuid = props.uuid;
     }
 
-    this.getPlayerItemPreviewURL = this.getPlayerItemPreviewURL.bind(this);
+    // this.getPlayerItemPreviewURL = this.getPlayerItemPreviewURL.bind(this);
   }
 
   /**
     return a promise
   */
   getPlayerItemPreviewURL() {
+    console.log("getPlayerItemPreviewURL");
     return new Promise(function(resolve, reject) {
       $.ajax({
         url: '/api/youtubedl',
@@ -41,7 +42,6 @@ class PlayerItem {
 
         resolve(response.url);
       });
-
     }.bind(this));
   }
 
