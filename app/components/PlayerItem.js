@@ -40,7 +40,13 @@ class PlayerItem {
         data: {encoded: btoa(this.youtube_url)}
       }).done((response) => {
 
-        resolve(response.url);
+        // proxy by local server
+        // solve youtube server ip tracking
+        // resolve(response.url);
+        let encoded = btoa(response.url);
+        let proxy = "/api/proxy?encoded=" + encoded
+
+        resolve(proxy);
       });
     }.bind(this));
   }

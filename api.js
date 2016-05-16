@@ -61,6 +61,17 @@ router.get('/getPlaylist/', (req, res, next) => {
   });
 })
 
+router.get('/proxy/', (req, res, next) => {
+  var encoded = req.query.encoded;
+  var decoded = atob(encoded);
+
+  // console.log(decoded);
+  // request(decoded).pipe(res);
+  req.pipe(request.get({
+    url: decoded
+  })).pipe(res);
+});
+
 router.get('/ip', (req, res) => {
   request.get('http://bot.whatismyipaddress.com/', (error, response, body) => {
     res.send({response: response, body: body});
