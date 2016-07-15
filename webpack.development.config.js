@@ -44,6 +44,9 @@ module.exports = {
           path.resolve(__dirname, './app'),
           path.resolve(__dirname, './index.js')
         ],
+        // exclude: [
+        //   path.resolve(__dirname, 'node_modules'),
+        // ],
         loaders: ['react-hot-loader', 'babel']
       },
       {
